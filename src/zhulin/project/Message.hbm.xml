@@ -3,7 +3,7 @@
       "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
   <class name="zhulin.project.Message" table="ZL_Message">
-    <id name="id">
+    <id name="id" type="integer">
       <generator class="assigned" />
     </id>
     <property name="date" type="date" />

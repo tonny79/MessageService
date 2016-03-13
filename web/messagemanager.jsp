@@ -1,4 +1,6 @@
+<%@ page import="zhulin.project.Message"%>
 <jsp:useBean id="messageManager" scope="session" class="zhulin.project.MessageManager" />
+
 <html>
   <head>
     <title>Message Service</title>
@@ -49,13 +51,25 @@ INPUT{
         </tr>
       </table>
     </form>
-    <%
-      String[] messages=messageManager.getMessages();
-      for(int i=0;i<messages.length;i++){
-    %>
-          <%=messages[i]%><br />
-    <%
-      }
-    %>
+    <p />
+    <table>
+      <tr>
+        <td>ID</td>
+        <td>Date</td>
+        <td>Message</td>
+      </tr>
+      <%
+         Message[] messages=messageManager.getMessages();
+         for(int i=0;i<messages.length;i++){
+      %>  
+      <tr>
+        <td align="left"><%=messages[i].getId()%></td>
+        <td align="left"><%=messages[i].getDate()%></td>
+        <td align="left"><%=messages[i].getMessage()%></td>
+      </tr>
+      <%
+        }
+      %>
+    </table>
   </body>
 </html>

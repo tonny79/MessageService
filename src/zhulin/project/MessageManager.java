@@ -37,14 +37,16 @@ public class MessageManager {
 		}
 	}
 	
-	public String[] getMessages(){
+	public Message[] getMessages(){
 		this.loadMessages();
 		
-		String[] result=new String[messages.size()];
+		Message[] result=new Message[messages.size()];
 		Iterator<Message> iter=messages.iterator();
 		for(int i=0;i<result.length;i++){
-			result[i]=iter.next().toString();
+			result[i]=iter.next();
 		}
+		
+		Arrays.sort(result);
 		
 		return result;
 	}
@@ -53,7 +55,7 @@ public class MessageManager {
 		//Refresh the message list
 		this.loadMessages();
 		
-		Message message=new Message(String.valueOf(messages.size()),new Date(),text);
+		Message message=new Message(messages.size(),new Date(),text);
 		MessageManager.messages.add(message);
 		
 		//Save to database
