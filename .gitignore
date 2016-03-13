@@ -1,0 +1,8 @@
+
+bin/hibernate.cfg.xml
+
+*.class
+
+bin/zhulin/project/Message.hbm.xml
+
+dist/messageservice.war
