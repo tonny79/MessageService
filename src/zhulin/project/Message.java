@@ -2,7 +2,11 @@ package zhulin.project;
 
 import java.text.DateFormat;
 import java.util.*;
+import javax.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
+@Entity
+@Table(name="ZLMessage")
 public class Message implements Comparable<Message>{
 	private int id;
 	private Date date;
@@ -11,21 +15,24 @@ public class Message implements Comparable<Message>{
 	private Message(){
 	}
 	
-	public Message(int id,Date date,String message){
-		this.id=id;
+	public Message(Date date,String message){
 		this.date=date;
 		this.message=message;
 	}
 	
-	// Properties
-	private void setId(int id){
-		this.id=id;
-	}
-		
+	@Id
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment",strategy="increment")
 	public int getId(){
 		return this.id;
 	}
 	
+	private void setId(int id){
+		this.id=id;
+	}
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="create_date")
 	public Date getDate(){
 		return date;
 	}

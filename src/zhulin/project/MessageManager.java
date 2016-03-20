@@ -55,7 +55,7 @@ public class MessageManager {
 		//Refresh the message list
 		this.loadMessages();
 		
-		Message message=new Message(messages.size(),new Date(),text);
+		Message message=new Message(new Date(),text);
 		MessageManager.messages.add(message);
 		
 		//Save to database

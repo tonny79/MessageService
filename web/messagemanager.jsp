@@ -52,7 +52,7 @@ INPUT{
       </table>
     </form>
     <p />
-    <table>
+    <table border="1">
       <tr>
         <td>ID</td>
         <td>Date</td>

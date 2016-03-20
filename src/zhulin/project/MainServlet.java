@@ -76,7 +76,7 @@ public class MainServlet extends HttpServlet{
 		String chat=req.getParameter("chat");
 		if (!chat.trim().equals("")){
 			//Date currentDate=new Date();
-			Message message=new Message(chatHistory.size(),new Date(),chat);
+			Message message=new Message(new Date(),chat);
 			chatHistory.add(message);
 			
 			//Save to database
