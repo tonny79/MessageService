@@ -1,9 +1,11 @@
 package zhulin.project;
 
-import java.awt.Point;
+import java.util.*;
 
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -13,11 +15,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="ZLDevice")
 public class Device implements Comparable<Device> {
 	public static enum DeviceType{
 		INFLAMER,
@@ -32,8 +34,15 @@ public class Device implements Comparable<Device> {
 	@Embedded
 	private Location location;
 	
+	//@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
+	private List<DeviceStatus> statuses=new ArrayList<>();
+	
 	
 	private Device(){
+	}
+	
+	public Device(DeviceInfo deviceInfo){
+		this(deviceInfo.name,deviceInfo.type,deviceInfo.memory,deviceInfo.location);
 	}
 	
 	public Device(String name,DeviceType type,int memory, Location location){
@@ -86,11 +95,36 @@ public class Device implements Comparable<Device> {
 	public void setLocation(Location location){
 		this.location=location;
 	}
+	
+	@ElementCollection
+	public List<DeviceStatus> getStatuses(){
+		return this.statuses;
+	}
+	
+	private void setStatuses(List<DeviceStatus> statuses){
+		this.statuses=statuses;
+	}
 
 	@Override
 	public int compareTo(Device d) {
 		// TODO Auto-generated method stub
 		return this.id-d.id;
+	}
+	
+	@Override
+	public boolean equals(Object obj){
+		if(!(obj instanceof Device)){
+			return false;
+		}
+		
+		Device temp=(Device)obj;
+		
+		if (this.id==temp.id&&this.name==temp.name&&this.memory==temp.memory&&this.type==temp.type
+				&&this.location.equals(location)&&this.statuses.size()==temp.statuses.size()){
+			return true;
+		}
+		
+		return false;
 	}
 
 }

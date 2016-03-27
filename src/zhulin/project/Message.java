@@ -6,7 +6,6 @@ import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name="ZLMessage")
 public class Message implements Comparable<Message>{
 	private int id;
 	private Date date;

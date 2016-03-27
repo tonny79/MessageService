@@ -3,10 +3,10 @@
 	<property name="dist" value="dist" />
 	<property name="src" value="src" />
 	<property name="build" value="bin" />
-	<property name="scp_server" value="192.168.50.128" />
+	<property name="scp_server" value="192.168.172.141" />
     <property name="scp_user" value="zhulin" />
 	<property name="scp_password" value="zl197941" />
-	<property name="scp_dir" value="/home/uftp/webapps" />
+	<property name="scp_dir" value="/home/zhulin/webapps" />
 	<property name="war_file" value="messageservice.war" />
 	
 	<target name="init">

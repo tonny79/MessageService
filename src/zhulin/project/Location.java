@@ -30,4 +30,19 @@ public class Location{
 	public void setY(int Y){
 		this.Y=Y;
 	}
+	
+	@Override
+	public String toString(){
+		return "("+X+","+Y+")";
+	}
+	
+	@Override
+	public boolean equals(Object obj){
+		if(!(obj instanceof Location)){
+			return false;
+		}
+		
+		Location temp=(Location)obj;
+		return X==temp.X&&Y==temp.Y;
+	}
 }
