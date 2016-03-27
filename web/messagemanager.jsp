@@ -42,7 +42,7 @@ INPUT{
          messageManager.sendMessage(message);
       }
     %>
-    <form action="messagemanager.jsp" method="post">
+    <form action="messagemanager.jsp" method="put">
       <table border="0">
         <tr>
           <td align="left">Message:</td>

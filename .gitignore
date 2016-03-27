@@ -6,3 +6,4 @@ bin/hibernate.cfg.xml
 bin/zhulin/project/Message.hbm.xml
 
 dist/messageservice.war
+/bin/

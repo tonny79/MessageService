@@ -3,10 +3,10 @@
 	<property name="dist" value="dist" />
 	<property name="src" value="src" />
 	<property name="build" value="bin" />
-	<property name="ftp_server" value="192.168.31.123" />
-	<property name="ftp_user" value="uftp" />
-	<property name="ftp_password" value="zl197941" />
-	<property name="ftp_dir" value="webapps" />
+	<property name="scp_server" value="192.168.50.128" />
+    <property name="scp_user" value="zhulin" />
+	<property name="scp_password" value="zl197941" />
+	<property name="scp_dir" value="/home/uftp/webapps" />
 	<property name="war_file" value="messageservice.war" />
 	
 	<target name="init">
@@ -31,12 +31,13 @@
 	</target>
 	
 	<target name="distribute" depends="buildWeb">
-		<ftp server="${ftp_server}"
+		<!--<ftp server="${ftp_server}"
 		       userid="${ftp_user}"
 		       password="${ftp_password}"
 			   remotedir="${ftp_dir}">
 		    <fileset dir="${dist}"/>
-		</ftp>
+		</ftp>-->
+		<scp trust="true" file="${dist}/${war_file}" todir="${scp_user}:${scp_password}@${scp_server}:${scp_dir}"/>
 	</target>
 	
 	<target name="clean">
