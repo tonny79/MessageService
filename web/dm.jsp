@@ -50,7 +50,7 @@ INPUT{
               type==1?Device.DeviceType.INFLAMER:Device.DeviceType.BOILER,new Location(x,y)));
       }
     %>
-    <form action="devicemanager.jsp" method="post">
+    <form action="dm.jsp" method="post">
       <table border="0">
         <tr>
           <td align="left">Name:</td>
