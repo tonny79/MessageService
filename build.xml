@@ -1,13 +1,17 @@
 <?xml version="1.0"?>
-<project name="Message Service" default="distribute" basedir=".">
+<project name="Device Manager" default="distribute" basedir=".">
 	<property name="dist" value="dist" />
 	<property name="src" value="src" />
 	<property name="build" value="bin" />
-	<property name="scp_server" value="192.168.172.141" />
+	<property name="lib" value="lib" />
+	<property name="scp_server" value="192.168.31.123" />
+	<!--<property name="scp_server" value="139.196.152.183" />-->
     <property name="scp_user" value="zhulin" />
 	<property name="scp_password" value="zl197941" />
-	<property name="scp_dir" value="/home/zhulin/webapps" />
-	<property name="war_file" value="messageservice.war" />
+	<property name="scp_dir" value="/home/uftp/webapps" />
+	<property name="war_file" value="devicemanager.war" />
+	<property name="jar_file" value="deviceclient.jar" />
+	<property name="main_class" value="zhulin.project.dm.client.DeviceClient" />
 	
 	<target name="init">
 		<mkdir dir="${dist}" />
@@ -25,19 +29,41 @@
 		/>-->
 		<war destfile="${dist}/${war_file}" webxml="web.xml">
 			<fileset dir="web"/>
-			<lib dir="lib" />
+			<lib dir="${lib}" />
 			<classes dir="${build}" />
 		</war>
 	</target>
 	
-	<target name="distribute" depends="buildWeb">
+	<target name="buildJar" depends="init">
+		<delete file="${dist}/${jar_file}"></delete>
+		
+		<jar destfile="${dist}/${jar_file}" basedir="${build}">
+			<restrict>
+			   <name name="**/*.class"/>
+			   <archives>
+			     <zips>
+			       <fileset dir="C:\Java_Lib\jaxrs-ri\lib" includes="**/*.jar"/>
+			       <fileset dir="C:\Java_Lib\jaxrs-ri\ext" includes="**/*.jar"/>
+			       <fileset dir="C:\Java_Lib\jaxrs-ri\api" includes="**/*.jar"/>
+			       <fileset dir="C:\Java_Lib\hibernate-release-5.1.0.Final\lib\required" includes="**/*.jar" />
+			     </zips>
+			   </archives>
+			</restrict>
+			<manifest>
+			   <attribute name="Main-Class" value="${main_class}"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="distribute">
 		<!--<ftp server="${ftp_server}"
 		       userid="${ftp_user}"
 		       password="${ftp_password}"
 			   remotedir="${ftp_dir}">
 		    <fileset dir="${dist}"/>
 		</ftp>-->
-		<scp trust="true" file="${dist}/${war_file}" todir="${scp_user}:${scp_password}@${scp_server}:${scp_dir}"/>
+		<scp trust="true" file="${dist}/${jar_file}" todir="${scp_user}:${scp_password}@${scp_server}:${scp_dir}"/>
+		<!--<scp trust="true" file="${dist}/${war_file}" todir="${scp_user}:${scp_password}@${scp_server}:${scp_dir}"/>-->
 	</target>
 	
 	<target name="clean">

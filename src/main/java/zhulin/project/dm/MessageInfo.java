@@ -1,4 +1,4 @@
-package zhulin.project;
+package zhulin.project.dm;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

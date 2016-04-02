@@ -1,4 +1,4 @@
-package zhulin.project;
+package zhulin.project.dm;
 
 import java.util.*;
 
@@ -11,34 +11,41 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
+import org.hibernate.criterion.CriteriaSpecification;
+
+import zhulin.project.dm.dao.Device;
+import zhulin.project.dm.dao.DeviceStatus;
+
 @Path("/devices")
 public class DeviceManager {
 	private List<Device> devices = null;
 
+	public DeviceManager(){
+		this.loadDevices();
+	}
+	
 	private void loadDevices() {
 		// Load the devices from DB
 		try {
 			org.hibernate.Session session = Utils.sessionFactory
 					.getCurrentSession();
 			session.beginTransaction();
-			devices = session.createCriteria(Device.class).list();
+			Criteria c = session.createCriteria(Device.class);
+			c.setFetchMode("statuses", FetchMode.JOIN);
+			c.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+			devices=c.list();
 			session.getTransaction().commit();
 			System.out.println("Retrieved devices from database:"
 					+ devices.size());
 		} catch (Throwable ex) {
 			System.err.println("Can't retrieve devices!" + ex);
 			ex.printStackTrace();
-			// Initialize the devices queue anyway
-			if (devices == null) {
-				devices = new ArrayList<Device>();
-			}
 		}
 	}
 
-	private Device findDevice(int id) {
-		//Load devices from database
-		this.loadDevices();
-		
+	public Device getDevice(int id) {
 		if (devices != null) {
 			for (Device device : devices) {
 				if (device.getId() == id) {
@@ -65,11 +72,6 @@ public class DeviceManager {
 	}
 
 	public void addDevice(Device device) {
-		// Refresh the device list
-		this.loadDevices();
-
-		devices.add(device);
-
 		// Save to database
 		try {
 			org.hibernate.Session session = Utils.sessionFactory
@@ -81,16 +83,20 @@ public class DeviceManager {
 			System.err.println("Can't save the device to database." + e);
 			e.printStackTrace();
 		}
+		
+		// Refresh the device list
+		this.loadDevices();
 	}
 
 	public int updateDevice(int id) {
-		Device device = findDevice(id);
+		Device device = getDevice(id);
 		if (device != null) {
 			try {
 				org.hibernate.Session session = Utils.sessionFactory
 						.getCurrentSession();
 				session.beginTransaction();
 				session.update(device);
+				session.flush();
 				session.getTransaction().commit();
 
 				return device.getId();
@@ -107,8 +113,10 @@ public class DeviceManager {
 	@Produces(MediaType.APPLICATION_XML)
 	public List<DeviceInfo> getDevicesXML() {
 		this.loadDevices();
+		
 		List<DeviceInfo> result = new ArrayList<DeviceInfo>(devices.size());
 		for (Device device : devices) {
+			System.out.println("Find the device \""+device.getName()+"\"!");
 			DeviceInfo deviceInfo = new DeviceInfo(device.getName(),
 					device.getMemory(), device.getType(), device.getLocation());
 			deviceInfo.id = device.getId();
@@ -138,7 +146,7 @@ public class DeviceManager {
 	@Path("/device/{id}/status")
 	@Produces(MediaType.APPLICATION_XML)
 	public List<DeviceStatus> getDeviceStatus(@PathParam("id") int id) {
-		Device device=this.findDevice(id);
+		Device device=this.getDevice(id);
 		
 		return device==null?null:device.getStatuses();
 	}
@@ -148,20 +156,18 @@ public class DeviceManager {
 	@Consumes(MediaType.APPLICATION_XML)
 	public void addDeviceStatus(@PathParam("id") int id,DeviceStatus deviceStatus){
 		System.out.println("Recieved the status for "+id+"!");
-		Device device=this.findDevice(id);
+		Device device=this.getDevice(id);
 		if(device!=null){
-			System.out.println("Find the device:"+device.getId()+" add the status:"+deviceStatus);
-			//TODO: Why program stops here?
-			//device.getStatuses().add(deviceStatus);
+			System.out.println("Find the device:"+device.getId()+" add new temperature:"+deviceStatus.getTemperature());
+			device.getStatuses().add(deviceStatus);
+			System.out.println(String.format("Now the device \"%d\" has %d statuses!", 
+					device.getId(),device.getStatuses().size()));
 			
 			System.out.println("Update the device \""+device.getName()+"\"");
 			this.updateDevice(id);
-			
-			return;
+		}else{
+			System.out.println("Can't find the device: id="+id+"! Discard the status:"+deviceStatus);
 		}
-		System.out.println("Can't find the device: id="+id+"! Discard the status:"+deviceStatus);
-		
-		return;
 	}
 	
 }

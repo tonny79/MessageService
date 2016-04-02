@@ -1,8 +1,8 @@
 <%@ page import="java.util.List"%>
-<%@ page import="zhulin.project.DeviceInfo"%>
-<%@ page import="zhulin.project.Location"%>
-<%@ page import="zhulin.project.Device"%>
-<jsp:useBean id="deviceManager" scope="session" class="zhulin.project.DeviceManager" />
+<%@ page import="zhulin.project.dm.DeviceInfo"%>
+<%@ page import="zhulin.project.dm.dao.Location"%>
+<%@ page import="zhulin.project.dm.dao.Device"%>
+<jsp:useBean id="deviceManager" scope="session" class="zhulin.project.dm.DeviceManager" />
 
 <html>
   <head>
@@ -87,8 +87,8 @@ INPUT{
          for(DeviceInfo device:devices){
       %>  
       <tr>
-        <td align="left"><%=device.id%></td>
-        <td align="left"><%=device.name%></td>
+        <td align="left"><%=device.id %></td>
+        <td align="left"><a href="device.jsp?id=<%=device.id %>"><%=device.name%></a></td>
         <td align="left"><%=device.memory%></td>
         <td align="left"><%=device.type%></td>
         <td align="left"><%=device.location%></td>

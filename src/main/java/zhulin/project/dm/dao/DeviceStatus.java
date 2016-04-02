@@ -1,4 +1,4 @@
-package zhulin.project;
+package zhulin.project.dm.dao;
 
 import java.util.*;
 
@@ -12,12 +12,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.GenericGenerator;
 
 @XmlRootElement
-@Embeddable
+@Entity
+//@Embeddable
 public class DeviceStatus {
-	private int temperature;
-	private Date createdDate;
+	public int id;
+	public int temperature;
+	public Date createdDate;
 	
-	private DeviceStatus(){
+	DeviceStatus(){
 	}
 	
 	public DeviceStatus(int temperature){
@@ -25,7 +27,7 @@ public class DeviceStatus {
 		this.createdDate=new Date();
 	}
 	
-	/*@Id
+	@Id
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment",strategy="increment")
 	public int getId(){
@@ -34,7 +36,7 @@ public class DeviceStatus {
 	
 	private void setId(int id){
 		this.id=id;
-	}*/
+	}
 	
 	public int getTemperature(){
 		return this.temperature;

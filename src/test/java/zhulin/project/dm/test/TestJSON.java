@@ -1,4 +1,4 @@
-package zhulin.project.test;
+/*package zhulin.project.dm.test;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -66,4 +66,4 @@ public class TestJSON {
 		}
 	}
 
-}
+}*/

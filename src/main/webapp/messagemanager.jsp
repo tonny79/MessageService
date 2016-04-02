@@ -1,5 +1,5 @@
-<%@ page import="zhulin.project.Message"%>
-<jsp:useBean id="messageManager" scope="session" class="zhulin.project.MessageManager" />
+<%@ page import="zhulin.project.dm.dao.Message"%>
+<jsp:useBean id="messageManager" scope="session" class="zhulin.project.dm.MessageManager" />
 
 <html>
   <head>

@@ -1,4 +1,4 @@
-package zhulin.project;
+package zhulin.project.dm.dao;
 
 import java.util.*;
 
@@ -10,6 +10,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -18,6 +19,8 @@ import javax.persistence.Column;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import zhulin.project.dm.DeviceInfo;
 
 @Entity
 public class Device implements Comparable<Device> {
@@ -29,23 +32,21 @@ public class Device implements Comparable<Device> {
 	private int id;
 	private String name;
 	@Enumerated
-	private DeviceType type;
+	private Device.DeviceType type;
 	private int memory;
 	@Embedded
 	private Location location;
-	
-	//@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<DeviceStatus> statuses=new ArrayList<>();
 	
 	
-	private Device(){
+	Device(){
 	}
 	
 	public Device(DeviceInfo deviceInfo){
 		this(deviceInfo.name,deviceInfo.type,deviceInfo.memory,deviceInfo.location);
 	}
 	
-	public Device(String name,DeviceType type,int memory, Location location){
+	public Device(String name,Device.DeviceType type,int memory, Location location){
 		this.name=name;
 		this.type=type;
 		this.memory=memory;
@@ -72,11 +73,11 @@ public class Device implements Comparable<Device> {
 		this.name=name;
 	}
 	
-	public DeviceType getType(){
+	public Device.DeviceType getType(){
 		return this.type;
 	}
 	
-	private void setType(DeviceType type){
+	private void setType(Device.DeviceType type){
 		this.type=type;
 	}
 	
@@ -96,7 +97,8 @@ public class Device implements Comparable<Device> {
 		this.location=location;
 	}
 	
-	@ElementCollection
+	//@ElementCollection(fetch=FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true,fetch=FetchType.EAGER)
 	public List<DeviceStatus> getStatuses(){
 		return this.statuses;
 	}

@@ -1,6 +1,9 @@
-package zhulin.project;
+package zhulin.project.dm;
 
 import javax.xml.bind.annotation.XmlRootElement;
+
+import zhulin.project.dm.dao.Device;
+import zhulin.project.dm.dao.Location;
 
 @XmlRootElement
 public class DeviceInfo {

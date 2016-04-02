@@ -1,4 +1,4 @@
-package zhulin.project;
+package zhulin.project.dm;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

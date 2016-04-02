@@ -1,4 +1,4 @@
-package zhulin.project;
+package zhulin.project.dm;
 
 import java.util.*;
 
@@ -11,6 +11,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.w3c.dom.*;
+
+import zhulin.project.dm.dao.Message;
+
 import javax.xml.parsers.*;
 
 

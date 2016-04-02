@@ -1,4 +1,4 @@
-package zhulin.project;
+package zhulin.project.dm.dao;
 
 import javax.persistence.Embeddable;
 

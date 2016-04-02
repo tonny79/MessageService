@@ -1,4 +1,4 @@
-package zhulin.project.test;
+package zhulin.project.dm.test;
 
 import java.util.*;
 import javax.ws.rs.client.Client;
@@ -8,7 +8,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
-import zhulin.project.MessageInfo;
+import zhulin.project.dm.MessageInfo;
 
 public class TestMessage {
 

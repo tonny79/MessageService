@@ -7,3 +7,20 @@ bin/zhulin/project/Message.hbm.xml
 
 dist/messageservice.war
 /bin/
+
+*.war
+target/devicemanager-1.0/device.jsp
+target/devicemanager-1.0/messagemanager.jsp
+target/devicemanager-1.0/dm.jsp
+*.jar
+target/surefire-reports/zhulin.project.dm.test.TestDevice.txt
+target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+target/devicemanager-1.0/WEB-INF/classes/hibernate.cfg.xml
+target/surefire-reports/TEST-zhulin.project.dm.test.TestDevice.xml
+target/maven-archiver/pom.properties
+target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
+target/devicemanager-1.0/WEB-INF/web.xml
+target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
+.settings/org.eclipse.jdt.core.prefs
+.settings/org.eclipse.jdt.core.prefs
