@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.junit.Assert;
 
 public class TestDevice {
+	public static final String SERVER_URL="http://192.168.50.128/devicemanager-1.0/";
 
 	public void testHibernate() {
 		DeviceManager deviceManager = new DeviceManager();
@@ -49,7 +50,7 @@ public class TestDevice {
 	@Test
 	public void testRest() {
 		Client client = ClientBuilder.newClient();
-		WebTarget base = client.target("http://192.168.31.123:8080/devicemanager/");
+		WebTarget base = client.target(SERVER_URL);
 
 		// Create a device via XML
 		DeviceInfo device = new DeviceInfo("Test-from-RestClient", 1024, DeviceType.BOILER,
@@ -70,7 +71,7 @@ public class TestDevice {
 	@Test
 	public void testDeviceClient(){
 		DeviceClient client=new DeviceClient("Test by JUnit");
-		int deviceId=client.register("http://192.168.31.123:8080/devicemanager");
+		int deviceId=client.register(SERVER_URL);
 		Assert.assertTrue(deviceId>0);
 		
 		client.sendSignal(100);

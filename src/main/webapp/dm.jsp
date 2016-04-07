@@ -74,6 +74,9 @@ INPUT{
       </table>
     </form>
     <p />
+    Download client <a href="http://139.196.152.183/devicemanager-1.0/devicemanager-1.0-client.jar">here</a> and execute the following command with Java: <br />
+    <i>java -jar devicemanager-1.0-client.jar "Device Name" http://139.196.152.183/devicemanager-1.0</i>
+    <p />
     <table border="1">
       <tr>
         <th>ID</th>

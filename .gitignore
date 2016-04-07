@@ -24,3 +24,5 @@ target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
 target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
 .settings/org.eclipse.jdt.core.prefs
 .settings/org.eclipse.jdt.core.prefs
+target/surefire-reports/zhulin.project.dm.test.DeviceInfoTest.txt
+target/surefire-reports/TEST-zhulin.project.dm.test.DeviceInfoTest.xml
