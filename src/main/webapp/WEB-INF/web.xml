@@ -21,6 +21,6 @@
 
     <servlet-mapping>
         <servlet-name>dmresource</servlet-name>
-        <url-pattern>/rest/*</url-pattern>
+        <url-pattern>/dmrest/*</url-pattern>
     </servlet-mapping>
 </web-app>

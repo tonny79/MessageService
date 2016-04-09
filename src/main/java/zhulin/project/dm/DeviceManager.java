@@ -45,7 +45,7 @@ public class DeviceManager {
 		}
 	}
 
-	public Device getDevice(int id) {
+	private Device getDevice(int id) {
 		if (devices != null) {
 			for (Device device : devices) {
 				if (device.getId() == id) {
@@ -57,7 +57,7 @@ public class DeviceManager {
 		return null;
 	}
 
-	public Device[] getDevices() {
+	private Device[] getDevices() {
 		this.loadDevices();
 
 		Device[] result = new Device[devices.size()];
@@ -71,7 +71,7 @@ public class DeviceManager {
 		return result;
 	}
 
-	public void addDevice(Device device) {
+	private void addDevice(Device device) {
 		// Save to database
 		try {
 			org.hibernate.Session session = Utils.sessionFactory
@@ -88,7 +88,7 @@ public class DeviceManager {
 		this.loadDevices();
 	}
 
-	public int updateDevice(int id) {
+	private int updateDevice(int id) {
 		Device device = getDevice(id);
 		if (device != null) {
 			try {
@@ -108,10 +108,15 @@ public class DeviceManager {
 
 		return -1;
 	}
-
+	
+	/**
+	 * Retrieve the device list
+	 * 
+	 * @return
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_XML)
-	public List<DeviceInfo> getDevicesXML() {
+	public List<DeviceInfo> getDevicesInfo() {
 		this.loadDevices();
 		
 		List<DeviceInfo> result = new ArrayList<DeviceInfo>(devices.size());
@@ -125,7 +130,35 @@ public class DeviceManager {
 
 		return result;
 	}
+	
+	/**
+	 * Retrieve the detail info of a particular device
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@GET
+	@Path("/device/{id}")
+	@Produces(MediaType.APPLICATION_XML)
+	public DeviceInfo getDeviceInfo(@PathParam("id") int id){
+		Device device=this.getDevice(id);
+		if(device!=null){
+			DeviceInfo result=new DeviceInfo(device.getName(),device.getMemory(),
+					device.getType(),device.getLocation());
+			result.id=device.getId();
+			
+			return result;
+		}
+		
+		return null;
+	}
 
+	/**
+	 * Create a new device
+	 * 
+	 * @param deviceInfo
+	 * @return
+	 */
 	@POST
 	@Path("/device")
 	@Consumes(MediaType.APPLICATION_XML)
@@ -141,7 +174,36 @@ public class DeviceManager {
 
 		return null;
 	}
-
+	
+	/**
+	 * Update a particular device
+	 * 
+	 * @param id
+	 * @param deviceInfo
+	 * @return
+	 */
+	@POST
+	@Path("/device/{id}")
+	@Consumes(MediaType.APPLICATION_XML)
+	public DeviceInfo updateDeviceInfo(@PathParam("id") int id,DeviceInfo deviceInfo){
+		//Find the device
+		Device device=this.getDevice(id);
+		if(device!=null&&deviceInfo!=null){
+			device.setMemory(deviceInfo.memory);
+			device.setLocation(deviceInfo.location);
+			
+			this.updateDevice(id);
+		}
+		
+		return deviceInfo;
+	}
+	
+	/**
+	 * Retrieve the statuses of a particular device
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@GET
 	@Path("/device/{id}/status")
 	@Produces(MediaType.APPLICATION_XML)
@@ -151,6 +213,12 @@ public class DeviceManager {
 		return device==null?null:device.getStatuses();
 	}
 	
+	/**
+	 * Create a new status for a particular device 
+	 * 
+	 * @param id
+	 * @param deviceStatus
+	 */
 	@POST
 	@Path("/device/{id}/status")
 	@Consumes(MediaType.APPLICATION_XML)

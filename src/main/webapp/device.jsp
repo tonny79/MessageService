@@ -1,6 +1,6 @@
 <%@ page import="java.util.List"%>
 <%@ page import="zhulin.project.dm.dao.DeviceStatus"%>
-<%@ page import="zhulin.project.dm.dao.Device"%>
+<%@ page import="zhulin.project.dm.DeviceInfo" %>
 <jsp:useBean id="deviceManager" scope="session"
 	class="zhulin.project.dm.DeviceManager" />
 
@@ -72,12 +72,12 @@ INPUT {
       String id=request.getParameter("id");
       boolean found=false;
       if(id!=null&&!id.trim().equals("")){
-    	 Device device=deviceManager.getDevice(Integer.parseInt(id));
+    	 DeviceInfo device=deviceManager.getDeviceInfo(Integer.parseInt(id));
     	 if(device!=null){
     		 String temp=request.getParameter("temperature");
     		 if(temp!=null&&!temp.trim().equals("")){
     			 DeviceStatus status=new DeviceStatus(Integer.parseInt(temp));
-    			 deviceManager.addDeviceStatus(device.getId(), status);
+    			 deviceManager.addDeviceStatus(device.id, status);
     		 }
     		 
     		 
@@ -92,17 +92,17 @@ INPUT {
 			<th>Location</th>
 		</tr>
 		<tr>
-			<td align="left"><%=device.getId()%></td>
-			<td align="left"><%=device.getName()%></td>
-			<td align="left"><%=device.getMemory()%></td>
-			<td align="left"><%=device.getType()%></td>
-			<td align="left"><%=device.getLocation()%></td>
+			<td align="left"><%=device.id%></td>
+			<td align="left"><%=device.name%></td>
+			<td align="left"><%=device.memory%></td>
+			<td align="left"><%=device.type%></td>
+			<td align="left"><%=device.location%></td>
 		</tr>
 	</table>
 	<p />
 	<form action="device.jsp" method="post">
 	  <!-- Pass Device ID -->
-	  <input type="hidden" name="id" value="<%=device.getId() %>" />
+	  <input type="hidden" name="id" value="<%=device.id %>" />
       <table border="0">
         <tr>
           <td align="left">Send Temperature Signal:</td>
@@ -119,7 +119,7 @@ INPUT {
         <th>Detect Date</th>
       </tr>
       <%
-         List<DeviceStatus> statuses=device.getStatuses();
+         List<DeviceStatus> statuses=deviceManager.getDeviceStatus(device.id);
          for(DeviceStatus status:statuses){
       %>
       <tr>

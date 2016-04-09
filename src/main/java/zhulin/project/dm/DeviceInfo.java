@@ -7,7 +7,7 @@ import zhulin.project.dm.dao.Location;
 
 @XmlRootElement
 public class DeviceInfo {
-	public int id;
+	public int id=-1;
 	public String name;
 	public int memory;
 	public Device.DeviceType type;
@@ -21,5 +21,21 @@ public class DeviceInfo {
 		this.memory=memory;
 		this.type=type;
 		this.location=location;
+	}
+	
+	@Override
+	public boolean equals(Object obj){
+		if(!(obj instanceof DeviceInfo)){
+			return false;
+		}
+		
+		DeviceInfo temp=(DeviceInfo)obj;
+		
+		if (this.id==temp.id&&this.name==temp.name&&this.memory==temp.memory&&this.type==temp.type
+				&&this.location.equals(temp.location)){
+			return true;
+		}
+		
+		return false;
 	}
 }

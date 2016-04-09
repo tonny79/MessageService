@@ -86,7 +86,7 @@ INPUT{
         <th>Location</th>
       </tr>
       <%
-         List<DeviceInfo> devices=deviceManager.getDevicesXML();
+         List<DeviceInfo> devices=deviceManager.getDevicesInfo();
          for(DeviceInfo device:devices){
       %>  
       <tr>

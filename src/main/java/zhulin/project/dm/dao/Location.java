@@ -7,7 +7,7 @@ public class Location{
 	private int X;
 	private int Y;
 	
-	private Location(){
+	Location(){
 	}
 	
 	public Location(int X,int Y){

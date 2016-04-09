@@ -6,7 +6,7 @@
     <!--Database connection settings-->
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
     <!--<property name="connection.url">jdbc:mysql://192.168.172.141:3306/devicemanager</property>-->
-    <property name="connection.url">jdbc:mysql://db:3306/devicemanager</property>
+    <property name="connection.url">jdbc:mysql://192.168.50.128:3306/devicemanager</property>
     <property name="connection.username">root</property>
     <property name="connection.password">zl197941</property>
     
@@ -31,6 +31,7 @@
     
     <!-- Drop and re-create the database schema on startup -->
     <property name="hbm2ddl.auto">create</property>
+    <mapping resource="zhulin/project/dm/dao/Employee.hbm.xml" />
     <mapping class="zhulin.project.dm.dao.Device" />
     <mapping class="zhulin.project.dm.dao.DeviceStatus" />
   </session-factory>

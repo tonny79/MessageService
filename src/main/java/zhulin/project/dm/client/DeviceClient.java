@@ -32,7 +32,7 @@ public class DeviceClient {
 		base = client.target(URL);
 		
 		DeviceInfo device = new DeviceInfo(name, memory, type,location);
-		device = base.path("/rest/devices/device").request(MediaType.APPLICATION_XML).post(Entity.xml(device), DeviceInfo.class);
+		device = base.path("/dmrest/devices/device").request(MediaType.APPLICATION_XML).post(Entity.xml(device), DeviceInfo.class);
 		System.out.println("Sent device and recieved id=" + device.id);
 		
 		this.deviceId=device.id;
@@ -41,7 +41,7 @@ public class DeviceClient {
 	
 	public void sendSignal(int temperature){
 		DeviceStatus deviceStatus = new DeviceStatus(temperature);
-		base.path("/rest/devices/device/" + deviceId + "/status").request(MediaType.APPLICATION_XML).post(Entity.xml(deviceStatus));
+		base.path("/dmrest/devices/device/" + deviceId + "/status").request(MediaType.APPLICATION_XML).post(Entity.xml(deviceStatus));
 		System.out.println(String.format("Send signal \"%d\" for the device \"%s\"!", temperature,this.name));
 	}
 	

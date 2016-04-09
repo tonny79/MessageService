@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<hibernate-mapping>
+	<class entity-name="zhulin.project.dm.dao.Employee" table="TEST_EMPLOYEE"
+		polymorphism="implicit" lazy="false">
+		<id name="id" type="string">
+			<column name="id" />
+		</id>
+
+		<property name="name" column="name" type="string" />
+		<property name="emailId" column="emailId" type="string" />
+	</class>
+</hibernate-mapping>

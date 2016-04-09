@@ -12,6 +12,10 @@
         <fileSet>
             <outputDirectory>/</outputDirectory>  
             <directory>target/classes</directory>
+            <excludes>
+               <exclude>*.jsp</exclude>
+               <exclude>devicemanager-1.0-client.jar</exclude>
+            </excludes>
         </fileSet>  
     </fileSets> 
     <dependencySets>  
